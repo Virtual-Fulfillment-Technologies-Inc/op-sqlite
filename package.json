@@ -76,12 +76,14 @@
 		"react": "19.1.1",
 		"react-native": "0.82.1",
 		"react-native-builder-bob": "^0.40.15",
+		"react-native-windows": "0.81.0-preview.11",
 		"typescript": "^5.9.2"
 	},
 	"peerDependencies": {
 		"@sqlite.org/sqlite-wasm": "*",
 		"react": "*",
-		"react-native": "*"
+		"react-native": "*",
+		"react-native-windows": "*"
 	},
 	"peerDependenciesMeta": {
 		"@sqlite.org/sqlite-wasm": {
