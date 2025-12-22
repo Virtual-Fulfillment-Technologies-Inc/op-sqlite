@@ -199,7 +199,7 @@ BridgeResult opsqlite_execute_prepared_statement(
     sqlite3 *db, sqlite3_stmt *statement, std::vector<DumbHostObject> *results,
     std::shared_ptr<std::vector<SmartHostObject>> &metadatas) {
 
-  const char *errorMessage;
+  const char *errorMessage = nullptr;
 
   bool isConsuming = true;
   bool isFailed = false;
@@ -482,7 +482,7 @@ BridgeResult opsqlite_execute_host_objects(
     std::shared_ptr<std::vector<SmartHostObject>> &metadatas) {
 
   sqlite3_stmt *statement;
-  const char *errorMessage;
+  const char *errorMessage = nullptr;
   const char *remainingStatement = nullptr;
 
   bool isConsuming = true;
@@ -641,7 +641,7 @@ opsqlite_execute_raw(sqlite3 *db, std::string const &query,
                      const std::vector<JSVariant> *params,
                      std::vector<std::vector<JSVariant>> *results) {
   sqlite3_stmt *statement;
-  const char *errorMessage;
+  const char *errorMessage = nullptr;
   const char *remainingStatement = nullptr;
 
   bool isConsuming = true;
