@@ -21,6 +21,13 @@
 #include <CppWinRTIncludes.h>
 #include <winrt/Microsoft.ReactNative.h>
 
+// Windows Storage APIs for file system access
+#include <winrt/Windows.Storage.h>
+#include <winrt/Windows.ApplicationModel.h>
+
+// JSI (JavaScript Interface) headers
+#include <JSI/JsiApiContext.h>
+
 // C RunTime Header Files
 #include <malloc.h>
 #include <memory.h>
@@ -28,3 +35,6 @@
 #include <tchar.h>
 
 // Reference additional headers your project requires here
+
+// C++ opsqlite layer
+#include "..\..\cpp\OPSqlite.hpp"

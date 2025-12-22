@@ -3,15 +3,13 @@
 #include "pch.h"
 #include "resource.h"
 
-#if __has_include("codegen/NativeOpSqliteDataTypes.g.h")
-  #include "codegen/NativeOpSqliteDataTypes.g.h"
+#if __has_include("codegen/NativeOPSQLiteDataTypes.g.h")
+  #include "codegen/NativeOPSQLiteDataTypes.g.h"
 #endif
 // Note: The following lines use Mustache template syntax which will be processed during
 // project generation to produce standard C++ code. If existing codegen spec files are found,
 // use the actual filename; otherwise use conditional includes.
-#if __has_include("codegen/NativeOpSqliteSpec.g.h")
-  #include "codegen/NativeOpSqliteSpec.g.h"
-#endif
+#include "codegen/NativeOPSQLiteSpec.g.h"
 
 #include "NativeModules.h"
 
@@ -25,15 +23,19 @@ struct OpSqlite
 {
   // Note: Mustache template syntax below will be processed during project generation
   // to produce standard C++ code based on detected codegen files.
-#if __has_include("codegen/NativeOpSqliteSpec.g.h")
-  using ModuleSpec = OpSqliteCodegen::OpSqliteSpec;
-#endif
+  using ModuleSpec = OpSqliteCodegen::OPSQLiteSpec;
 
   REACT_INIT(Initialize)
   void Initialize(React::ReactContext const &reactContext) noexcept;
 
-  REACT_SYNC_METHOD(multiply)
-  double multiply(double a, double b) noexcept;
+  REACT_GET_CONSTANTS(GetConstants)
+  OpSqliteCodegen::OPSQLiteSpec_Constants GetConstants() noexcept;
+
+  REACT_SYNC_METHOD(install)
+  bool install() noexcept;
+
+  REACT_SYNC_METHOD(moveAssetsDatabase)
+  bool moveAssetsDatabase(std::string name, std::string extension) noexcept;
 
 private:
   React::ReactContext m_context;

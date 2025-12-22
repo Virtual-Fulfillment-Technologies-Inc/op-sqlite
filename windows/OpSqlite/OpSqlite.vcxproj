@@ -5,7 +5,7 @@
   <PropertyGroup Label="Globals">
     <CppWinRTOptimized>true</CppWinRTOptimized>
     <MinimalCoreWin>true</MinimalCoreWin>
-    <ProjectGuid>{EA861D94-60E4-4529-9E36-7BD16866E086}</ProjectGuid>
+    <ProjectGuid>{ECE065B2-509D-4569-93E9-BF45B45E0536}</ProjectGuid>
     <ProjectName>OpSqlite</ProjectName>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>OpSqlite</RootNamespace>
@@ -81,6 +81,9 @@
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <AdditionalIncludeDirectories>
         $(MSBuildThisFileDirectory);
+        $(MSBuildThisFileDirectory)..\..\node_modules\react-native\ReactCommon\jsi;
+        $(MSBuildThisFileDirectory)..\..\node_modules\react-native\ReactCommon;
+        $(MSBuildThisFileDirectory)..\..\cpp;
         %(AdditionalIncludeDirectories)
       </AdditionalIncludeDirectories>
     </ClCompile>
@@ -103,6 +106,10 @@
   </ItemDefinitionGroup>
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
+    <ClInclude Include="..\..\cpp\libsql\bridge.hpp" />
+    <ClInclude Include="..\..\cpp\libsql\libsql.h" />
+    <ClInclude Include="..\..\cpp\logs.h" />
+    <ClInclude Include="..\..\cpp\sqlite3.h" />
     <ClInclude Include="OpSqlite.h" />
     <ClInclude Include="ReactPackageProvider.h">
       <DependentUpon>ReactPackageProvider.idl</DependentUpon>
@@ -110,6 +117,16 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="..\..\cpp\OPSqlite.hpp" />
+    <ClInclude Include="..\..\cpp\DBHostObject.h" />
+    <ClInclude Include="..\..\cpp\DumbHostObject.h" />
+    <ClInclude Include="..\..\cpp\SmartHostObject.h" />
+    <ClInclude Include="..\..\cpp\PreparedStatementHostObject.h" />
+    <ClInclude Include="..\..\cpp\OPThreadPool.h" />
+    <ClInclude Include="..\..\cpp\bridge.h" />
+    <ClInclude Include="..\..\cpp\types.hpp" />
+    <ClInclude Include="..\..\cpp\macros.hpp" />
+    <ClInclude Include="..\..\cpp\utils.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="OpSqlite.cpp" />
@@ -120,6 +137,13 @@
       <DependentUpon>ReactPackageProvider.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
+    <ClCompile Include="OpSqliteWinRT.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\cpp\sqlite3.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <CompileAs>CompileAsC</CompileAs>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="ReactPackageProvider.idl" />
