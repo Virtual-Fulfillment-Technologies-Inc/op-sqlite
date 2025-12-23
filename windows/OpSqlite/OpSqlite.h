@@ -18,8 +18,8 @@ namespace winrt::OpSqlite
 
 // See https://microsoft.github.io/react-native-windows/docs/native-platform for help writing native modules
 
-REACT_MODULE(OpSqlite)
-struct OpSqlite
+REACT_MODULE(OPSQLite)
+struct OPSQLite
 {
   // Note: Mustache template syntax below will be processed during project generation
   // to produce standard C++ code based on detected codegen files.

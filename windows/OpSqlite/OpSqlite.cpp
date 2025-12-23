@@ -7,11 +7,11 @@ namespace winrt::OpSqlite
 
 // See https://microsoft.github.io/react-native-windows/docs/native-platform for help writing native modules
 
-void OpSqlite::Initialize(React::ReactContext const &reactContext) noexcept {
+void OPSQLite::Initialize(React::ReactContext const &reactContext) noexcept {
   m_context = reactContext;
 }
 
-OpSqliteCodegen::OPSQLiteSpec_Constants OpSqlite::GetConstants() noexcept {
+OpSqliteCodegen::OPSQLiteSpec_Constants OPSQLite::GetConstants() noexcept {
   using namespace winrt::Windows::Storage;
   using namespace winrt::Windows::ApplicationModel;
 
@@ -46,7 +46,7 @@ OpSqliteCodegen::OPSQLiteSpec_Constants OpSqlite::GetConstants() noexcept {
   return constants;
 }
 
-bool OpSqlite::install() noexcept {
+bool OPSQLite::install() noexcept {
   using namespace winrt::Microsoft::ReactNative;
   using namespace winrt::Windows::Storage;
 
@@ -83,7 +83,7 @@ bool OpSqlite::install() noexcept {
   }
 }
 
-bool OpSqlite::moveAssetsDatabase(std::string name, std::string extension) noexcept {
+bool OPSQLite::moveAssetsDatabase(std::string name, std::string extension) noexcept {
   using namespace winrt::Windows::Storage;
   using namespace winrt::Windows::ApplicationModel;
 
@@ -122,4 +122,4 @@ bool OpSqlite::moveAssetsDatabase(std::string name, std::string extension) noexc
   }
 }
 
-} // namespace winrt::OpSqlite
+} // namespace winrt::OPSQlite
