@@ -96,6 +96,7 @@
         $(MSBuildThisFileDirectory)..\..\cpp;
         %(AdditionalIncludeDirectories)
       </AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalDependencies>shell32.lib;user32.lib;windowsapp.lib;%(AdditionalDependenices)</AdditionalDependencies>
