@@ -15,6 +15,10 @@
 #include <unordered_map>
 #include <variant>
 
+#if defined(__ANDROID__) && defined(OP_SQLITE_USE_SQLITE_VEC)
+#include <dlfcn.h>
+#endif
+
 #ifdef TOKENIZERS_HEADER_PATH
 #include TOKENIZERS_HEADER_PATH
 #else
@@ -123,6 +127,14 @@ sqlite3 *opsqlite_open(std::string const &name, std::string const &path,
 #endif
 
 #ifdef OP_SQLITE_USE_SQLITE_VEC
+#if defined(__ANDROID__)
+  // The prebuilt libsqlite_vec.so references ceil/floor and other libm symbols
+  // but is not linked against libm. On 32-bit ARM (armeabi-v7a) the dynamic
+  // linker therefore fails to resolve them and sqlite3_load_extension aborts
+  // ("cannot locate symbol \"ceil\""). Preload libm with RTLD_GLOBAL so its
+  // symbols are in scope when the extension is loaded below.
+  dlopen("libm.so", RTLD_NOW | RTLD_GLOBAL);
+#endif
   const char *vec_entry_point = "sqlite3_vec_init";
 
   sqlite3_load_extension(db, sqlite_vec_path.c_str(), vec_entry_point, &errMsg);
