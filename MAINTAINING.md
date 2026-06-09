@@ -32,6 +32,8 @@ of an unmodified upstream release.
 
 So the **latest version we may use is the highest `15.2.x` release** (currently `15.2.14`). Upstream `16.x`
 exists but is **out of bounds** until a future `@powersync/op-sqlite` widens its peer range to include it.
+(This ceiling gates what the **monorepo pins**, not the fork itself — the fork can be rebased onto `16.x`
+independently; see [Major-version bumps](#major-version-bumps-eg-15x--16x).)
 
 **Before every upgrade, check the ceiling:**
 
@@ -127,8 +129,9 @@ git fetch upstream --tags
 # 2. Replay our two patches onto the new release
 git checkout vendora-patches
 git rebase --onto "$NEW" "$OLD" vendora-patches
-#   Conflicts are rare: our patches are almost all net-new windows/** files plus a few lines in
-#   cpp/bridge.cpp, src/*.ts and package.json. Resolve, keeping upstream's changes + re-applying ours.
+#   Conflicts: rare on a PATCH bump (our patches are mostly net-new windows/** files plus a few lines
+#   in cpp/bridge.cpp, src/*.ts, package.json). A MAJOR bump WILL conflict — see "Major-version bumps".
+#   Resolve by keeping upstream's changes and re-applying ours.
 
 # 3. Regenerate lib/ (skip only if the verify-diff above is empty)
 yarn install && yarn bob build
@@ -149,6 +152,31 @@ git push origin "v${NEW}-vendora.1"
 
 **Versioning the tag:** new upstream base → reset the suffix (`v15.2.15-vendora.1`). Same base but you changed
 *our* patches → bump the suffix (`v15.2.14-vendora.2`).
+
+---
+
+## Major-version bumps (e.g. `15.x → 16.x`)
+
+Same flow as the playbook above, but with judgment calls — don't run it on autopilot:
+
+- **The fork is not blocked by PowerSync.** The `^15` ceiling gates only what the **monorepo pins**, not the
+  fork. You can rebase `vendora-patches` onto `16.x` and publish a `v16.x.y-vendora.N` tag anytime; the monorepo
+  keeps pinning the `15.2.x` tag until PowerSync supports `16.x`.
+- **Expect real conflicts.** A major release changes the files our patches live in (`15.x → 16.x` touches
+  `cpp/bridge.cpp` and `src/index.ts`). Re-apply our additions on top of upstream's new code, then `--continue`.
+- **Re-evaluate the libm fix — don't blindly carry it.** A major may rework how `sqlite-vec` is built (`16.x`
+  added `scripts/build-sqlitevec.sh` and changed `android/CMakeLists.txt`). Check whether the new
+  `libsqlite_vec.so` now links libm before keeping the preload:
+  ```bash
+  "$ANDROID_NDK"/toolchains/llvm/prebuilt/*/bin/llvm-readelf -d \
+    <built armeabi-v7a>/libsqlite_vec.so | grep NEEDED
+  ```
+  If `libm.so` appears as `NEEDED`, upstream fixed it → **drop the `fix(android)` commit**; otherwise keep it.
+- **The `lib/` rebuild is mandatory** — the carry-forward shortcut is valid only when `src/` is unchanged, and a
+  major bump changes `src/`. Run the real `yarn install && yarn bob build`.
+- **Verify like a major:** full build on all three platforms + an end-to-end run of every consumer (on the
+  monorepo side, a full PowerSync sync), and confirm the rebuilt `lib/` still carries the `WINDOWS_*` exports.
+- **Good moment to upstream** the Windows support and/or libm fix to OP-Engineering, shrinking or retiring the fork.
 
 ---
 
