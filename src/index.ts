@@ -25,6 +25,9 @@ export const {
   ANDROID_DATABASE_PATH,
   ANDROID_FILES_PATH,
   ANDROID_EXTERNAL_FILES_PATH,
+  WINDOWS_DATABASE_PATH,
+  WINDOWS_LOCAL_FOLDER,
+  WINDOWS_TEMP_FOLDER,
 } = !!NativeModules.OPSQLite.getConstants
   ? NativeModules.OPSQLite.getConstants()
   : NativeModules.OPSQLite;

@@ -22,6 +22,7 @@
 		"cpp",
 		"node/dist",
 		"node/package.json",
+		"windows",
 		"*.podspec",
 		"*.rb",
 		"react-native.config.js",
@@ -76,12 +77,14 @@
 		"react": "19.1.1",
 		"react-native": "0.82.1",
 		"react-native-builder-bob": "^0.40.15",
+		"react-native-windows": "^0.80.0",
 		"typescript": "^5.9.2"
 	},
 	"peerDependencies": {
 		"@sqlite.org/sqlite-wasm": "*",
 		"react": "*",
-		"react-native": "*"
+		"react-native": "*",
+		"react-native-windows": "*"
 	},
 	"peerDependenciesMeta": {
 		"@sqlite.org/sqlite-wasm": {
@@ -123,6 +126,11 @@
 		"jsSrcsDir": "src",
 		"android": {
 			"javaPackageName": "com.op.sqlite"
+		},
+		"windows": {
+			"namespace": "OpSqliteCodegen",
+			"outputDirectory": "windows/OpSqlite/codegen",
+			"separateDataTypes": true
 		}
 	},
 	"create-react-native-library": {
@@ -130,5 +138,12 @@
 		"type": "turbo-module",
 		"version": "0.52.1"
 	},
-	"packageManager": "yarn@4.11.0"
+	"packageManager": "yarn@4.11.0",
+	"react-native-windows": {
+		"init-windows": {
+			"name": "OpSqlite",
+			"namespace": "OpSqlite",
+			"template": "cpp-lib"
+		}
+	}
 }
