@@ -1,0 +1,45 @@
+import type { DB, OPSQLiteProxy } from "./types";
+/**
+ * Open a connection to a local sqlite database on web.
+ * Web is async-only: use openAsync() and async methods like execute().
+ */
+export declare const openAsync: (params: {
+    name: string;
+    location?: string;
+    encryptionKey?: string;
+}) => Promise<DB>;
+export declare const open: (_params: {
+    name: string;
+    location?: string;
+    encryptionKey?: string;
+}) => DB;
+export declare const openSync: (_params: {
+    url: string;
+    authToken: string;
+    name: string;
+    location?: string;
+    libsqlSyncInterval?: number;
+    libsqlOffline?: boolean;
+    encryptionKey?: string;
+    remoteEncryptionKey?: string;
+}) => DB;
+export declare const openRemote: (_params: {
+    url: string;
+    authToken: string;
+}) => DB;
+export declare const moveAssetsDatabase: (_args: {
+    filename: string;
+    path?: string;
+    overwrite?: boolean;
+}) => Promise<boolean>;
+export declare const getDylibPath: (_bundle: string, _name: string) => string;
+export declare const isSQLCipher: () => boolean;
+export declare const isLibsql: () => boolean;
+export declare const isTurso: () => boolean;
+export declare const isIOSEmbedded: () => boolean;
+/**
+ * @deprecated Use `isIOSEmbedded` instead. This alias will be removed in a future release.
+ */
+export declare const isIOSEmbeeded: () => boolean;
+export declare const OPSQLite: OPSQLiteProxy;
+//# sourceMappingURL=functions.web.d.ts.map
